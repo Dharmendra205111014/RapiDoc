@@ -108,7 +108,10 @@ export default function mainBodyTemplate() {
         <slot></slot>
         <div class="main-content-inner--${this.renderStyle}-mode">
           ${this.loading === true ? html`<div class="loader"></div>` : ''}
-          ${this.loadFailed === true ? html`<div style="text-align: center;margin: 16px;"> Unable to load the Spec</div>` : ''}
+          ${this.loadFailed === true ? html`<div style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+            <img src="https://image.flaticon.com/icons/png/128/2891/2891441.png" />
+            <p>Unable to load the Spec</p>
+          </div>` : ''}
           ${this.resolvedSpec
             ? html`
               ${(this.showInfo === 'false' || !this.resolvedSpec.info)

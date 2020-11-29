@@ -29,7 +29,8 @@ export function expandedEndpointBodyTemplate(path) {
   }
 
   const codeSampleTabPanel = path.xCodeSamples ? codeSamplesTemplate.call(this, path.xCodeSamples) : '';
-  return html`
+  try {
+    return html`
     ${this.renderStyle === 'read' ? html` <div class='divider'></div>` : ''}
     <div class='expanded-endpoint-body observe-me ${path.method} ${path.deprecated ? 'deprecated' : ''} ' id='${path.method}-${path.path.replace(invalidCharsRegEx, '-')}'>
     ${path.deprecated ? html`<div class="bold-text red-text" > DEPRECATED </div>` : ''}
@@ -84,6 +85,12 @@ export function expandedEndpointBodyTemplate(path) {
     </div>
   </div>
   `;
+  } catch (e) {
+    return html`<div style="height: 100vh; display: flex; justify-content: center; align-items: center;"><slot name="expended-body-error">
+      <img src="https://image.flaticon.com/icons/png/128/2891/2891441.png" />
+      <p>Error while parsing spec</p>
+    </slot></div>`;
+  }
 }
 
 export default function expandedEndpointTemplate() {

@@ -52,9 +52,15 @@
     proxy-url="http://localhost:3000/proxy"
   > 
     <div slot="nav-logo">sadjagdjahsgd</div>
-      <div slot="nav-bottom">akjdhajdjsgdjhas</div>
+      <div slot="nav-bottom">
+        <button onclick="change()">Change</button>
+      </div>
   </rapi-doc>
-
+  <script>
+    function change() {
+      document.getElementById('thedoc').setAttribute("spec-url","http://tools.corp.zeta.in/swagger-fusion-ls/jenkins-spec-output/AccountHolder.json");
+    }
+  </script>
 
   <!-- <rapi-doc 
     id = "thedoc" 
