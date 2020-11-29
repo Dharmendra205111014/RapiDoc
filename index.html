@@ -8,6 +8,12 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/default.min.css">
   <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/highlight.min.js"></script>
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 </head>
 
 <body>
@@ -21,20 +27,36 @@
     ./specs/petstore_anyof.yaml <<< contains complex one-of with inline primitives and recursive objects
     ./specs/oneof1.yaml  <<< nested oneof
 -->
+<!-- <div class="navbar-fixed">
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo">Logo</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+      </ul>
+    </div>
+  </nav>
+</div> -->
 
-<!--
   <rapi-doc 
     id = "thedoc" 
-    spec-url = "https://petstore.swagger.io/v2/swagger.json" 
+    spec-url = "https://banking-assets.s3.ap-south-1.amazonaws.com/api/schaas.json" 
     theme = "light"
-    render-style = "read"
+    render-style = "focused"
     schema-style = 'tree'
     sort-endpoints-by = "method"
     response-area-height = "900px"
-  > </rapi-doc>
--->
+    show-header = "false"
+    allow-advance-search="false"
+    proxy-url="http://localhost:3000/proxy"
+  > 
+    <div slot="nav-logo">sadjagdjahsgd</div>
+      <div slot="nav-bottom">akjdhajdjsgdjhas</div>
+  </rapi-doc>
 
-  <rapi-doc 
+
+  <!-- <rapi-doc 
     id = "thedoc" 
     spec-url="./specs/temp.yaml"
     allow-server-selection = "false"
@@ -47,7 +69,7 @@
     schema-style = 'tree'
     render-style = 'read'
     default-schema-tab = "model"
-  > </rapi-doc>
+  > </rapi-doc> -->
 
 <!-- 
   <rapi-doc id = "thedoc" ></rapi-doc>

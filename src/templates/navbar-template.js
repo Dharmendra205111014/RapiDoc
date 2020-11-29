@@ -119,6 +119,9 @@ export default function navbarTemplate() {
     `}
     </nav>`
     }
+    <div style="padding:16px 30px 0 16px;">
+      <slot name="nav-bottom"></slot>
+    </div>
   </aside>
 `;
 }
