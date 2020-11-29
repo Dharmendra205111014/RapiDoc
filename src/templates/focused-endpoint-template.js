@@ -8,31 +8,38 @@ import '@/components/api-response';
 
 /* eslint-disable indent */
 function focusedTagBodyTemplate(selectedTag) {
-  return html`
-    <h1 id="tag--${selectedTag.name}">${selectedTag.name}</h1>
-    ${selectedTag.description ? html`<div class="m-markdown"> ${unsafeHTML(marked(selectedTag.description || ''))}</div>` : ''}
-    ${selectedTag.paths.length > 0 ? html`
-    <!-- Path (endpoints) -->
-    <h3>Go To: </h3>
-    ${selectedTag.paths.filter((v) => {
-      if (this.matchPaths) {
-        return pathIsInSearch(this.matchPaths, v);
-      }
-      return true;
-    }).map((p) => html`
-    <div 
-      class='nav-bar-path focused-body-tag
-      ${this.usePathInNavBar === 'true' ? 'small-font' : ''}' 
-      data-content-id='${p.method}-${p.path.replace(invalidCharsRegEx, '-')}' 
-      @click = '${() => this.scrollTo(`${p.method}-${p.path.replace(invalidCharsRegEx, '-')}`)}'
-    > 
-      <span style = "${p.deprecated ? 'filter:opacity(0.5)' : ''}"> 
-        <span class='focused-body-tag-m ${p.method}'>${p.method.toUpperCase()}</span> 
-        <span class='mono-font focused-body-tag-path'>${p.path}</span>
-      </span>
-    </div>`)}
-    ` : ''}
-  `;
+  try {
+    return html`
+      <h1 id="tag--${selectedTag.name}">${selectedTag.name}</h1>
+      ${selectedTag.description ? html`<div class="m-markdown"> ${unsafeHTML(marked(selectedTag.description || ''))}</div>` : ''}
+      ${selectedTag.paths.length > 0 ? html`
+      <!-- Path (endpoints) -->
+      <h3>Go To: </h3>
+      ${selectedTag.paths.filter((v) => {
+        if (this.matchPaths) {
+          return pathIsInSearch(this.matchPaths, v);
+        }
+        return true;
+      }).map((p) => html`
+      <div 
+        class='nav-bar-path focused-body-tag
+        ${this.usePathInNavBar === 'true' ? 'small-font' : ''}' 
+        data-content-id='${p.method}-${p.path.replace(invalidCharsRegEx, '-')}' 
+        @click = '${() => this.scrollTo(`${p.method}-${p.path.replace(invalidCharsRegEx, '-')}`)}'
+      > 
+        <span style = "${p.deprecated ? 'filter:opacity(0.5)' : ''}"> 
+          <span class='focused-body-tag-m ${p.method}'>${p.method.toUpperCase()}</span> 
+          <span class='mono-font focused-body-tag-path'>${p.path}</span>
+        </span>
+      </div>`)}
+      ` : ''}
+    `;
+  } catch (e) {
+    return html`<div style="height: 100vh; display: flex; justify-content: center; align-items: center;"><slot name="expended-body-error">
+      <img src="https://image.flaticon.com/icons/png/128/2891/2891441.png" />
+      <p>Error while parsing spec</p>
+    </slot></div>`;
+  }
 }
 
 export default function focusedEndpointTemplate() {

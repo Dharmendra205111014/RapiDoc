@@ -60,7 +60,6 @@ export default function searchByPropertiesModalTemplate() {
         }"
       > 
         <span class="upper bold-text method-fg ${path.method}">${path.method}</span> 
-        <span>${path.path}</span>
         <span class="regular-font gray-text">${path.summary}</span>
       </div>
     `)
