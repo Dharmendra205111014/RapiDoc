@@ -113,6 +113,9 @@ export default class RapiDoc extends LitElement {
       selectedContentId: { type: String },
       showAdvanceSearchDialog: { type: Boolean },
       advanceSearchMatches: { type: Object },
+
+      // Proxy properties
+      proxyUrl: { type: String, attribute: 'proxy-url' },
     };
   }
 
@@ -580,10 +583,10 @@ export default class RapiDoc extends LitElement {
       this.requestUpdate();
       if (this.renderStyle === 'read' || this.renderStyle === 'focused') {
         // Remove the previous active state from navbar
-          const oldNavEl = this.shadowRoot.querySelector('.nav-bar-tag.active, .nav-bar-path.active, .nav-bar-info.active, .nav-bar-h1.active, .nav-bar-h2.active');
-          if (oldNavEl) {
-            oldNavEl.classList.remove('active');
-          }
+        const oldNavEl = this.shadowRoot.querySelector('.nav-bar-tag.active, .nav-bar-path.active, .nav-bar-info.active, .nav-bar-h1.active, .nav-bar-h2.active');
+        if (oldNavEl) {
+          oldNavEl.classList.remove('active');
+        }
       }
       const spec = await ProcessSpec(
         specUrl,
@@ -689,7 +692,7 @@ export default class RapiDoc extends LitElement {
       }
     }));
     this.requestUpdate();
-    if (scrollToElement) {
+    if (scrollToElement && this.renderStyle !== 'focused') {
       // delay required, else we cant find element
       window.setTimeout(() => {
         const gotoEl = this.shadowRoot.getElementById(pathInput);
@@ -749,6 +752,9 @@ export default class RapiDoc extends LitElement {
         }
       }
       contentEl.scrollIntoView({ behavior: 'auto', block: 'start' });
+      if (this.renderStyle !== 'focused') {
+        contentEl.scrollIntoView({ behavior: 'auto', block: 'start' });
+      }
       const oldNavEl = this.shadowRoot.querySelector('.nav-bar-tag.active, .nav-bar-path.active, .nav-bar-info.active, .nav-bar-h1.active, .nav-bar-h2.active');
       if (oldNavEl) {
         oldNavEl.classList.remove('active');
@@ -766,7 +772,7 @@ export default class RapiDoc extends LitElement {
     if (e.target.tagName.toLowerCase() === 'a') {
       if (e.target.getAttribute('href').startsWith('#')) {
         const gotoEl = this.shadowRoot.getElementById(e.target.getAttribute('href').replace('#', ''));
-        if (gotoEl) {
+        if (gotoEl && this.renderStyle !== 'focused') {
           gotoEl.scrollIntoView({ behavior: 'auto', block: 'start' });
         }
       }

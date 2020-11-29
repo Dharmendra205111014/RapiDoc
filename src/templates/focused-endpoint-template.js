@@ -2,15 +2,36 @@ import { html } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import marked from 'marked';
 import { expandedEndpointBodyTemplate } from '@/templates/expanded-endpoint-template';
-import { invalidCharsRegEx } from '@/utils/common-utils';
+import { invalidCharsRegEx, pathIsInSearch } from '@/utils/common-utils';
 import '@/components/api-request';
 import '@/components/api-response';
 
 /* eslint-disable indent */
-function focusedTagBodyTemplate(tag) {
+function focusedTagBodyTemplate(selectedTag) {
   return html`
-    <h1 id="tag--${tag.name}">${tag.name}</h1>
-    ${tag.description ? html`<div class="m-markdown"> ${unsafeHTML(marked(tag.description || ''))}</div>` : ''}
+    <h1 id="tag--${selectedTag.name}">${selectedTag.name}</h1>
+    ${selectedTag.description ? html`<div class="m-markdown"> ${unsafeHTML(marked(selectedTag.description || ''))}</div>` : ''}
+    ${selectedTag.paths.length > 0 ? html`
+    <!-- Path (endpoints) -->
+    <h3>Go To: </h3>
+    ${selectedTag.paths.filter((v) => {
+      if (this.matchPaths) {
+        return pathIsInSearch(this.matchPaths, v);
+      }
+      return true;
+    }).map((p) => html`
+    <div 
+      class='nav-bar-path focused-body-tag
+      ${this.usePathInNavBar === 'true' ? 'small-font' : ''}' 
+      data-content-id='${p.method}-${p.path.replace(invalidCharsRegEx, '-')}' 
+      @click = '${() => this.scrollTo(`${p.method}-${p.path.replace(invalidCharsRegEx, '-')}`)}'
+    > 
+      <span style = "${p.deprecated ? 'filter:opacity(0.5)' : ''}"> 
+        <span class='focused-body-tag-m ${p.method}'>${p.method.toUpperCase()}</span> 
+        <span class='mono-font focused-body-tag-path'>${p.path}</span>
+      </span>
+    </div>`)}
+    ` : ''}
   `;
 }
 

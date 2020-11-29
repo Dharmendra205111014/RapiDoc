@@ -59,6 +59,8 @@ export default class ApiRequest extends LitElement {
       activeResponseTab: { type: String }, // internal tracking of response-tab not exposed as a attribute
       selectedRequestBodyType: { type: String, attribute: 'selected-request-body-type' }, // internal tracking of selected request-body type
       selectedRequestBodyExample: { type: String, attribute: 'selected-request-body-example' }, // internal tracking of selected request-body example
+      renderedOnce: { type: Boolean },
+      proxyUrl: { type: String, attribute: 'proxy-url' }, // To handle proxy request to external server rather then internal fetch
     };
   }
 
@@ -1189,7 +1191,24 @@ export default class ApiRequest extends LitElement {
     try {
       tryBtnEl.disabled = true;
       // await wait(1000);
-      const resp = await fetch(fetchUrl, fetchOptions);
+
+      // Make Request
+      console.log(this.proxyUrl);
+      console.log(`fetchUrl: ${fetchUrl}`, 'options', fetchOptions);
+
+      let resp = null;
+      if (this.proxyUrl) {
+        resp = await fetch(this.proxyUrl, {
+          headers: {
+            Accept: '*/*',
+            'Content-Type': 'application/json',
+          },
+          method: 'post',
+          body: JSON.stringify({ fetchUrl, fetchOptions }),
+        });
+      } else {
+        resp = await fetch(fetchUrl, fetchOptions);
+      }
       tryBtnEl.disabled = false;
       me.responseStatus = resp.ok ? 'success' : 'error';
       me.responseMessage = `${resp.statusText}:${resp.status}`;

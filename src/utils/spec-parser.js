@@ -159,6 +159,7 @@ export default async function ProcessSpec(specUrl, sortTags = false, sortEndpoin
     securitySchemes,
     servers,
     basePath: jsonParsedSpec.basePath, // Only available in swagger V2
+    jsonParsedSpec,
   };
   return parsedSpec;
 }
