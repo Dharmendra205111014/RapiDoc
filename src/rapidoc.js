@@ -577,8 +577,10 @@ export default class RapiDoc extends LitElement {
 
     this.matchPaths = '';
     try {
+      this.resolvedSpec = null;
       this.loading = true;
       this.loadFailed = false;
+      this.requestUpdate();
       const spec = await ProcessSpec(
         specUrl,
         this.sortTags === 'true',
@@ -619,6 +621,12 @@ export default class RapiDoc extends LitElement {
         this.selectedContentId = `${this.resolvedSpec.tags[0]?.paths[0]?.method}-${this.resolvedSpec.tags[0]?.paths[0]?.path}`;
       }
     }
+
+    const oldNavEl = this.shadowRoot.querySelector('.nav-bar-tag.active, .nav-bar-path.active, .nav-bar-info.active, .nav-bar-h1.active, .nav-bar-h2.active');
+    if (oldNavEl) {
+      oldNavEl.classList.remove('active');
+    }
+
     // Set url back in address bar
     window.location.hash = `${this.selectedContentId}`;
   }

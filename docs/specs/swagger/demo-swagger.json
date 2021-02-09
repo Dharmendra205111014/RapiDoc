@@ -1,0 +1,79 @@
+{
+  "info": {
+    "version": "v1",
+    "title": "Demo apis"
+  },
+  "tags": [
+    {
+      "name": "Operations"
+    }
+  ],
+  "paths": {
+    "/operation/{operationId}": {
+      "get": {
+        "parameters": [
+          {
+            "description": "Id of the operation",
+            "required": true,
+            "x-example": "12345",
+            "in": "path",
+            "type": "string",
+            "name": "operationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json; charset=utf-8" : {
+                "schema": {
+                  "$ref": "#/definitions/OperationResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "parameters": [
+          {
+            "description": "Id of the operation",
+            "required": true,
+            "x-example": "12345",
+            "in": "path",
+            "type": "string",
+            "name": "operationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json" : {
+                "schema": {
+                  "$ref": "#/definitions/OperationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "OperationResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Id of the operation"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the operation"
+        }
+      }
+    }
+  },
+  "swagger": "2.0"
+}
