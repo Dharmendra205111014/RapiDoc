@@ -67,7 +67,7 @@ export function expandedEndpointBodyTemplate(path) {
         active-schema-tab = "${this.defaultSchemaTab}"
         schema-expand-level = "${this.schemaExpandLevel}"
         schema-description-expanded = "${this.schemaDescriptionExpanded}"
-        proxy-url="${this.proxyUrl}"
+        proxy-url="${this.proxyUrl ? this.proxyUrl : ''}"
       > </api-request>
 
       ${path.callbacks ? callbackTemplate.call(this, path.callbacks) : ''}
